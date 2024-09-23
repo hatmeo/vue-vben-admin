@@ -88,9 +88,9 @@ export const listConfig = [
     id: 5,
     name: t('report.Content platform'),
     des: t('report.Estimated earnings by Platform and Content Platform'),
-    value: ['PLATFORM_TYPE_NAME'],
+    value: ['PLATFORM_TYPE_NAME', 'CONTENT_PLATFORM_NAME'],
     metrics: [...METRICS],
-    orderBy: ['PLATFORM_TYPE_NAME'],
+    orderBy: ['PLATFORM_TYPE_NAME', 'CONTENT_PLATFORM_NAME'],
   },
   {
     id: 6,
