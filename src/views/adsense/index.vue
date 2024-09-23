@@ -17,7 +17,12 @@
           </div>
         </div>
 
-        <rightContent v-if="!loading" :tableHeader="tableHeader" :tableData="tableData" />
+        <rightContent
+          v-if="!loading"
+          :tableHeader="tableHeader"
+          :tableData="tableData"
+          :indexList="indexList"
+        />
       </div>
     </div>
   </div>
@@ -31,6 +36,9 @@
   import { googleListApi, googleGenerateApi, googleFilterApi } from '@/api/adsense/adsense';
   import rightContent from './components/rightContent.vue';
   import { AlignLeftOutlined } from '@ant-design/icons-vue';
+  import { useI18n } from '@/hooks/web/useI18n';
+
+  const { t } = useI18n();
   // 接口参数
   const dateRange = ref({});
   const menuParam = ref({});
@@ -56,7 +64,6 @@
   // 菜单参数
   const menuSendData = (data) => {
     menuParam.value = data.value;
-    console.log(menuParam.value, 'menuParam.value');
     title.value = data.value.itemTitle;
   };
 
@@ -97,6 +104,10 @@
           res.rows.push(res.totals);
           tableHeader.value = res.headers;
           tableData.value = res.rows;
+          tableHeader.value.forEach((item) => {
+            const name = 'report.' + item.name;
+            item.name = t(name);
+          });
           loading.value = false;
         } catch (error) {
           tableHeader.value = [];
@@ -108,21 +119,24 @@
     },
     { deep: true, immediate: true },
   );
+
+  const indexList = ref({});
   watch(
     () => menuParam.value?.id,
     async (newAdId) => {
-      console.log(newAdId, 'newAdId');
       try {
         if (newAdId) {
           const res = await googleFilterApi({
             id: newAdId,
           });
-          console.log(res, 'res');
+          indexList.value = res;
+          await nextTick();
         }
       } catch (error) {
         console.error('googleFilterApi======err0r', error);
       }
     },
+    { deep: true, immediate: true },
   );
 </script>
 
@@ -205,5 +219,6 @@
   .loading-container {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
   }
 </style>
