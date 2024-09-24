@@ -70,7 +70,7 @@
   "IMPRESSIONS_CTR": "产生点击的展示次数的比率",
   "INDIVIDUAL_AD_IMPRESSIONS_CTR": "产生点击的广告的比率",
   "ACTIVE_VIEW_MEASURABILITY": "可测量的请求的比率",
-  "ACTIVE_VIEW_TIME": "可测量的请求的比率",
+  "ACTIVE_VIEW_TIME": "可查看时间",
   "AD_REQUESTS_RPM": "每千次广告请求的收入",
   "MATCHED_AD_REQUESTS_RPM": "每千次匹配广告请求的收入",
   "INDIVIDUAL_AD_IMPRESSIONS_RPM": "广告的每千次展示收入",
