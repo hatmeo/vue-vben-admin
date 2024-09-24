@@ -98,6 +98,19 @@
   "CREATIVE_SIZE_NAME": "广告素材尺寸名称",
   "TARGETING_TYPE_NAME": "定位类型名称",
   "BID_TYPE_NAME": "出价类型名称",
+  "BUYER_NETWORK_NAME": "广告网络名称",
+  "recommend": "推荐",
+  "advenced": "高级",
+  "session": "会话",
+  "AD_CTR": "广告点击率",
+  "IMPRESSIONS_PER_AD_SESSION": "每次广告会话的展示次数",
+  "Cancel": "取消",
+  "Submit": "应用",
+  "Clear All": "清除全部",
+  "selected": "已选择",
+  "item": "项",
+  "Search Metrics": "搜索指标...",
+  "Choose your metric": "选择指标"
   "CONTENT_PLATFORM_NAME": "内容平台名称",
   "PAGE_RPM": "每千次页面浏览的收入",
   "CTR": "点击率",
@@ -113,6 +126,5 @@
   "AD_SESSION_DURATION": "广告浏览的持续时间",
   "AD_SESSIONS": "广告浏览次数",
   "AD_SESSIONS_MEASURABLE": "可测量的广告浏览次数",
-  "AD_SESSION_RPM": "每千次广告浏览的收入",
-  "BUYER_NETWORK_NAME": "广告网络名称"
+  "AD_SESSION_RPM": "每千次广告浏览的收入"
 }
