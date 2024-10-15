@@ -31,11 +31,11 @@
 </template>
 
 <script setup>
-  import { ref, onBeforeMount, watch, nextTick } from 'vue';
+  import { ref, onBeforeMount, watch } from 'vue';
   import headerFilter from './components/headerFilter.vue';
   import leftMenu from './components/leftMenu2.vue';
   import { Button, Spin } from 'ant-design-vue';
-  import { googleListApi, googleGenerateApi, googleFilterApi } from '@/api/adsense/adsense';
+  import { googleListApi, googleGenerateSavedReportApi } from '@/api/adsense/adsense';
   import rightContent from './components/rightContent.vue';
   import { AlignLeftOutlined } from '@ant-design/icons-vue';
   import { useI18n } from '@/hooks/web/useI18n';
@@ -71,6 +71,7 @@
   const title = ref('Top');
   // 菜单参数
   const menuSendData = (data) => {
+    console.log('data===', data);
     menuParam.value = data.value;
     title.value = data.value.itemTitle;
   };
@@ -78,8 +79,13 @@
   const selectedValue = ref([]);
   // 请求图表数据
   const tableDataList = async (dateRange, menuParam, metrics = '') => {
-    const hasValidMenuParam = menuParam?.dimensions?.length > 0 && menuParam?.metrics?.length > 0;
-    if (hasValidMenuParam) {
+    console.log('dateRange==');
+    // const hasValidMenuParam = menuParam?.dimensions?.length > 0 && menuParam?.metrics?.length > 0;
+    // console.log('hasValidMenuParam', hasValidMenuParam);
+    const hasValidMenuParam = menuParam.id.legth > 0;
+    console.log('hasValidMenuParam id ', menuParam.id);
+    console.log('hasValidMenuParam', hasValidMenuParam);
+    if (menuParam.id) {
       try {
         loading.value = true;
         if (!adId.value) {
@@ -87,8 +93,9 @@
           adId.value = accounts[0].name;
         }
         let metricsList = metrics ? metrics : menuParam.metrics;
-        const res = await googleGenerateApi({
-          account: adId.value,
+        let account = menuParam.id ? menuParam.id : adId.value;
+        const res = await googleGenerateSavedReportApi({
+          account: account,
           dateRange: dateRange?.type || '',
           dimensions: menuParam?.dimensions || [],
           startDate: dateRange?.startDate || '',
@@ -96,6 +103,7 @@
           metrics: metricsList || '',
           orderBy: menuParam?.orderBy || '',
         });
+
         res.totals.cells[0].value = 'totals';
         res.rows.push(res.totals);
         tableHeader.value = res.headers;
@@ -147,23 +155,6 @@
   );
 
   const indexList = ref({});
-  watch(
-    () => menuParam.value?.id,
-    async (newAdId) => {
-      try {
-        if (newAdId) {
-          const res = await googleFilterApi({
-            id: newAdId,
-          });
-          indexList.value = res;
-          await nextTick();
-        }
-      } catch (error) {
-        console.error('googleFilterApi======err0r', error);
-      }
-    },
-    { deep: true, immediate: true },
-  );
 </script>
 
 <style lang="scss" scoped>

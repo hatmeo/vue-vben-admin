@@ -46,7 +46,6 @@
   import draggable from 'vuedraggable';
   import { SvgIcon } from '@/components/Icon';
   import { DragOutlined, MoreOutlined } from '@ant-design/icons-vue';
-  import { listConfig } from './config/listConfig.js';
   import { googleGenerateSavedListApi, googleListApi } from '@/api/adsense/adsense';
 
   defineProps({
@@ -60,6 +59,10 @@
 
   const list = ref([]);
 
+  const adId = ref('');
+
+  const customList = ref([]);
+
   const fetchSavedReports = async () => {
     try {
       loading.value = true;
@@ -70,16 +73,21 @@
       console.log('accounts', accounts);
       console.log('adId', adId.value);
 
-      
+      const { data } = await googleGenerateSavedListApi({ account: adId.value }).then((res) => {
+        console.log('data', res);
+        customList.value = res.savedReports;
+      });
 
-      return accounts;
+      console.log('data====', customList);
+
+      return customList;
     } catch (error) {
-      //console.error(error);
+      // console.error(error);
       return [];
     }
   };
 
-  const emit = defineEmits(['menuSendData']);
+  const emit = defineEmits(['menuSendData', 'customList']);
   const drag = ref(false);
   const selectedItem = ref(null);
   const showMoveTop = ref(null);
@@ -101,6 +109,7 @@
     menuParams.value.orderBy = item.orderBy;
     itemTitle.value = item.name;
     menuParams.value.id = item.id;
+    console.log('menuParams leftmenu2 ', menuParams);
     emit('menuSendData', menuParams);
   };
   const toggleMoveTop = (id) => {
@@ -129,7 +138,16 @@
   onMounted(() => {
     document.addEventListener('click', handleClickOutside);
     fetchSavedReports().then((res) => {
-      console.log('res', res);
+      list.value = customList.value.map((item) => {
+        return {
+          id: item.name,
+          name: item.title,
+          des: item.des,
+          value: item.value,
+          metrics: item.metrics,
+          orderBy: item.orderBy,
+        };
+      });
     });
   });
 
