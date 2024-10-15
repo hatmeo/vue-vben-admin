@@ -20,6 +20,12 @@ const adSense: AppRouteModule = {
       meta: { title: t('routes.adsense.Report') },
       component: () => import('@/views/adsense/index.vue'),
     },
+    {
+      path: '/adsense/savedReports',
+      name: 'SavedReports',
+      meta: { title: t('routes.adsense.SavedReports') },
+      component: () => import('@/views/adsense/savedReports.vue'),
+    },
   ],
 };
 
