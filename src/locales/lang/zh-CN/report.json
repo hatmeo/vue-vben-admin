@@ -126,5 +126,12 @@
   "AD_SESSION_DURATION": "广告浏览的持续时间",
   "AD_SESSIONS": "广告浏览次数",
   "AD_SESSIONS_MEASURABLE": "可测量的广告浏览次数",
+  "CLIENT_COST_ECPM": "客户成本的每千次展示收入",
+  "CUSTOM_TARGETING_VALUE_ID": "自定义定位值ID",
+  "CUSTOM_CHANNEL_ID": "自定义渠道ID",
+  "DOMAIN_CODE": "域名代码",
+  "PRODUCT_CODE": "产品代码",
+  "PLATFORM_TYPE_CODE": "平台类型代码",
+  "AD_UNIT_ID": "广告单元ID",
   "AD_SESSION_RPM": "每千次广告浏览的收入"
 }
