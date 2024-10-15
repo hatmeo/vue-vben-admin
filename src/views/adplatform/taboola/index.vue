@@ -15,12 +15,12 @@
 
 <script setup>
   import { ref, onBeforeMount, onMounted } from 'vue';
-  import { Button, Spin } from 'ant-design-vue';
+  // import { Button, Spin } from 'ant-design-vue';
   import FilterComponent from '../components/filter.vue';
   import TableComponent from '../components/table.vue';
   import { campaignListApi } from '@/api/adplatform/adplatform';
 
-  const loading = ref(true);
+  // const loading = ref(true);
   const tableHeader = ref([
     'advertiser_id',
     'advertiser_name',
@@ -34,6 +34,10 @@
   const params = {};
 
   const platform = 'Taboola';
+
+  const updateFilter = (newFilterText) => {
+    filterText.value = newFilterText;
+  };
 
   onMounted(async () => {
     const res = await campaignListApi(platform, params);
