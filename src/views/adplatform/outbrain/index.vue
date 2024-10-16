@@ -23,6 +23,13 @@
           :tableData="tableData"
           :filterText="filterText"
         />
+        <AntTableComponent
+          v-if="!loading"
+          :columns="columns"
+          :data-source="data"
+          :scroll="{ x: 2000 }"
+          :expand-column-width="100"
+        />
       </div>
     </div>
   </div>
@@ -32,6 +39,7 @@
   import { ref, onBeforeMount } from 'vue';
   import FilterComponent from '../components/filter.vue';
   import TableComponent from '../components/table.vue';
+  import AntTableComponent from '../components/AntTable.vue';
   import { campaignListApi } from '@/api/adplatform/adplatform';
 
   const loading = ref(true);
@@ -42,6 +50,10 @@
   const params = {};
 
   var platform = 'Outbrain';
+
+  params.marketerId = '00711aee410af2e6d411e4faa07f01c0c7';
+  params.extraFields =
+    'CustomAudience,Locations,InterestsTargeting,BidBySections,BlockedSites,PlatformTargeting,CampaignOptimization,Scheduling,IABCategories,CampaignPixels';
 
   const { campaings } = await campaignListApi(platform, params);
 

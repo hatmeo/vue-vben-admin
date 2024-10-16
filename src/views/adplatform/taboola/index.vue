@@ -7,6 +7,8 @@
           :tableHeader="tableHeader"
           :tableData="tableData"
           :filterText="filterText"
+          :editable="true"
+          :loading="loading"
         />
       </div>
     </div>

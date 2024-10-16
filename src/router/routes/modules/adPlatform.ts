@@ -21,7 +21,7 @@ const adPlatform: AppRouteModule = {
       component: () => import('@/views/adplatform/index.vue'),
     },
     {
-      path: '/adplatform/outbrain',
+      path: '',
       name: 'Outbrain',
       meta: {
         title: t('routes.adplatform.Outbrain'),
@@ -29,7 +29,50 @@ const adPlatform: AppRouteModule = {
         // icon: 'ion:build-outline',
         // orderNo: 1,
       },
-      component: () => import('@/views/adplatform/outbrain/index.vue'),
+      children: [
+        {
+          path: '/adplatform/outbrain',
+          name: 'OutbrainOverview',
+          meta: { title: t('routes.adplatform.Overview') },
+          component: () => import('@/views/adplatform/outbrain/index.vue'),
+        },
+        {
+          path: '/adplatform/outbrain/campaign',
+          name: 'OutbrainCampaign',
+          meta: { title: t('routes.adplatform.Campaign') },
+          component: () => import('@/views/adplatform/outbrain/campaign/index.vue'),
+        },
+        {
+          path: '/adplatform/outbrain/setting',
+          name: 'OutbrainSetting',
+          meta: { title: t('routes.adplatform.Setting') },
+          component: () => import('@/views/adplatform/outbrain/setting/index.vue'),
+        },
+        {
+          path: '/adplatform/outbrain/report',
+          name: 'OutbrainReport',
+          meta: { title: t('routes.adplatform.Report') },
+          component: () => import('@/views/adplatform/outbrain/report/index.vue'),
+        },
+        {
+          path: '/adplatform/outbrain/user',
+          name: 'OutbrainCreative',
+          meta: { title: t('routes.adplatform.User') },
+          component: () => import('@/views/adplatform/outbrain/user/index.vue'),
+        },
+        {
+          path: '/adplatform/outbrain/marketes',
+          name: 'OutbrainMarketers',
+          meta: { title: t('routes.adplatform.Marketers') },
+          component: () => import('@/views/adplatform/outbrain/marketers/index.vue'),
+        },
+        {
+          path: '/adplatform/outbrain/segments',
+          name: 'OutbrainSegments',
+          meta: { title: t('routes.adplatform.Segments') },
+          component: () => import('@/views/adplatform/outbrain/segments/index.vue'),
+        }
+      ],
     },
     {
       path: '/adplatform/taboola',
