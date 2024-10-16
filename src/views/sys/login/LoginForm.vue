@@ -140,9 +140,11 @@
         mode: 'none', //不要默认的错误提示
       });
       if (userInfo) {
+        console.log(userInfo);
+
         notification.success({
           message: t('sys.login.loginSuccessTitle'),
-          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+          description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.name}`,
           duration: 3,
         });
       }
