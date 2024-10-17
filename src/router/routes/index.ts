@@ -38,11 +38,39 @@ export const LoginRoute: AppRouteRecordRaw = {
   },
 };
 
+export const UserRoutes: AppRouteRecordRaw[] = [
+  {
+    path: '/adplatform/outbrain/campaign/detail',
+    name: 'OutbrainCampaignDetail',
+    meta: { title: t('routes.adplatform.Detail') },
+    component: () => import('@/views/adplatform/outbrain/campaign/detail.vue'),
+  },
+  {
+    path: '/adplatform/outbrain/campaign/creative',
+    name: 'OutbrainCreative',
+    meta: { title: t('routes.adplatform.Creative') },
+    component: () => import('@/views/adplatform/outbrain/campaign/creative.vue'),
+  },
+  {
+    path: '/adplatform/outbrain/campaign/edit',
+    name: 'OutbrainCampaignEdit',
+    meta: { title: t('routes.adplatform.Edit') },
+    component: () => import('@/views/adplatform/outbrain/campaign/edit.vue'),
+  },
+  {
+    name: 'OutbrainCampaignAdd',
+    path: '/adplatform/outbrain/campaign/add',
+    meta: { title: t('routes.adplatform.Add') },
+    component: () => import('@/views/adplatform/outbrain/campaign/add.vue'),
+  },
+];
+
 // Basic routing without permission
 // 未经许可的基本路由
 export const basicRoutes = [
   LoginRoute,
   RootRoute,
+  ...UserRoutes,
   ...mainOutRoutes,
   REDIRECT_ROUTE,
   PAGE_NOT_FOUND_ROUTE,

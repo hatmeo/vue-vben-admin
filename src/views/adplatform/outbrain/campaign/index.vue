@@ -1,10 +1,10 @@
 <template>
   <Row>
-    <Col :span="24">
+    <!-- <Col :span="24">
       <Space wrap>
         <Input v-model="search" placeholder="Search" />
       </Space>
-    </Col>
+    </Col> -->
     <Col :span="24">
       <Space>
         <Button type="primary" @click="AddCampaign">Add Campaign</Button>
@@ -23,9 +23,8 @@
   </Row>
 </template>
 <script lang="ts" setup>
-  import { Row, Col, Table, Space, Input, Button, Anchor } from 'ant-design-vue';
+  import { Row, Col, Table, Space, Input, Button } from 'ant-design-vue';
   import { onMounted, ref } from 'vue';
-  import { useRouter } from 'vue-router';
   import { router } from '@/router';
   import { campaignListApi } from '@/api/adplatform/adplatform';
 
@@ -61,7 +60,7 @@
 
   const AddCampaign = () => {
     console.log('Add Campaign');
-    router.push({ name: 'CampaignAdd', params: { platform: platform } });
+    router.push({ name: 'OutbrainCampaignAdd', params: { platform: platform } });
   };
 
   const DeleteCampaign = (record) => {
@@ -71,7 +70,7 @@
 
   const EditCampaign = (record) => {
     console.log('Edit Campaign', record);
-    router.push({ name: 'CampaignEdit', params: { platform: platform, id: record.id } });
+    router.push({ name: 'OutbrainCampaignEdit', query: { platform: platform, id: record.id } });
   };
 
   const pagination = {
@@ -84,10 +83,12 @@
     onChange: (page, pageSize) => {
       pagination.current = page;
       pagination.pageSize = pageSize;
+      fetchCampaignList();
     },
     onShowSizeChange: (current, size) => {
       pagination.current = current;
       pagination.pageSize = size;
+      fetchCampaignList();
     },
   };
 
@@ -144,37 +145,46 @@
     },
   ];
 
-  onMounted(() => {
-    const params = {
-      search: search.value,
-      marketerId: '00711aee410af2e6d411e4faa07f01c0c7',
-      limit: pagination.pageSize,
-      offset: (pagination.current - 1) * pagination.pageSize,
-      extraFields:
-        'CustomAudience,Locations,InterestsTargeting,BidBySections,BlockedSites,PlatformTargeting,CampaignOptimization,Scheduling,IABCategories,CampaignPixels',
-    };
+  const fetchCampaignList = async () => {
+    try {
+      const params = {
+        search: search.value,
+        marketerId: '00711aee410af2e6d411e4faa07f01c0c7',
+        limit: pagination.pageSize,
+        offset: (pagination.current - 1) * pagination.pageSize,
+        extraFields:
+          'CustomAudience,Locations,InterestsTargeting,BidBySections,BlockedSites,PlatformTargeting,CampaignOptimization,Scheduling,IABCategories,CampaignPixels',
+      };
 
-    campaignListApi(platform, params).then((res) => {
-      data.value = res.campaigns.campaigns.map((campaign) => {
-        return {
-          name: campaign.name,
-          status: campaign.status,
-          enabled: campaign.enabled,
-          budgetId: campaign.budget.id,
-          currency: campaign.currency,
-          marketerId: campaign.marketerId,
-          creationTime: campaign.creationTime,
-          startDate: campaign.startDate,
-          endDate: campaign.endDate,
-        };
+      campaignListApi(platform, params).then((res) => {
+        data.value = res.campaigns.campaigns.map((campaign) => {
+          return {
+            id: campaign.id,
+            name: campaign.name,
+            status: campaign.status,
+            enabled: campaign.enabled,
+            budgetId: campaign.budget.id,
+            currency: campaign.currency,
+            marketerId: campaign.marketerId,
+            creationTime: campaign.creationTime,
+            startDate: campaign.startDate,
+            endDate: campaign.endDate,
+          };
+        });
+
+        total.value = res.campaigns.totalCount;
+        // config the pagination total
+        pagination.total = total.value;
+        loading.value = false;
       });
-
-      total.value = res.campaigns.totalCount;
-      // config the pagination total
-      pagination.total = total.value;
+    } catch (error) {
+      console.log(error);
+    } finally {
       loading.value = false;
-    });
-  });
+    }
+  };
+
+  onMounted(fetchCampaignList);
 
   // on watch search
 </script>
