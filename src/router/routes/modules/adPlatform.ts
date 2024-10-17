@@ -25,9 +25,6 @@ const adPlatform: AppRouteModule = {
       name: 'Outbrain',
       meta: {
         title: t('routes.adplatform.Outbrain'),
-        // Add a new meta property
-        // icon: 'ion:build-outline',
-        // orderNo: 1,
       },
       children: [
         {
@@ -71,14 +68,34 @@ const adPlatform: AppRouteModule = {
           name: 'OutbrainSegments',
           meta: { title: t('routes.adplatform.Segments') },
           component: () => import('@/views/adplatform/outbrain/segments/index.vue'),
-        }
+        },
       ],
     },
     {
-      path: '/adplatform/taboola',
+      path: '',
       name: 'Taboola',
       meta: { title: t('routes.adplatform.Taboola') },
       component: () => import('@/views/adplatform/taboola/index.vue'),
+      children: [
+        {
+          path: '/adplatform/taboola',
+          name: 'TaboolaOverview',
+          meta: { title: t('routes.adplatform.Overview') },
+          component: () => import('@/views/adplatform/taboola/index.vue'),
+        },
+        {
+          path: '/adplatform/taboola/campaign',
+          name: 'TaboolaCampaign',
+          meta: { title: t('routes.adplatform.Campaign') },
+          component: () => import('@/views/adplatform/taboola/campaign/index.vue'),
+        },
+        {
+          path: '/adplatform/taboola/setting',
+          name: 'TaboolaSetting',
+          meta: { title: t('routes.adplatform.Setting') },
+          component: () => import('@/views/adplatform/taboola/setting/index.vue'),
+        },
+      ],
     },
     {
       path: '/adplatform/newsbreak',
