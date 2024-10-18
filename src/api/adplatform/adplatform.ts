@@ -6,7 +6,7 @@ enum Api {
   POST_CAMPAIGN_CREATE_API = `/post-campaigns`,
   PUT_CAMPAIGN_UPDATE_API = `/put-campaigns`,
   DELETE_CAMPAIGN_DELETE_API = `/delete-campaigns`,
-  GET_CAMPAIGN_DETAIL_API = `/get-campaigns-detail`,
+  GET_CAMPAIGN_DETAIL_API = `/get-campaign`,
 }
 
 export const campaignListApi = (Platform: string, params: any) => {
@@ -25,6 +25,9 @@ export const campaignDeleteApi = (Platform: string, params: any) => {
   return defHttp.delete({ url: '/platform/' + Platform + Api.DELETE_CAMPAIGN_DELETE_API, params });
 };
 
-export const campaignDetailApi = (Platform: string, params: any) => {
-  return defHttp.get({ url: '/platform/' + Platform + Api.GET_CAMPAIGN_DETAIL_API, params });
+export const campaignDetailApi = (Platform: string, campaignId: string, params: any) => {
+  return defHttp.get({
+    url: '/platform/' + Platform + Api.GET_CAMPAIGN_DETAIL_API + '/' + campaignId,
+    params,
+  });
 };
