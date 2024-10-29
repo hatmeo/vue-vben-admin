@@ -108,12 +108,33 @@
         res.rows.push(res.totals);
         tableHeader.value = res.headers;
         tableData.value = res.rows;
+
+        tableData.value.forEach((item, index) => {
+          // The value need use the tableHeader type to format
+          item.cells.forEach((cell, cellIndex) => {
+            const header = tableHeader.value[cellIndex];
+            if (header.type === 'METRIC_CURRENCY') {
+              cell.value = header.currencyCode + cell.value;
+            } else if (header.type === 'METRIC_RATIO') {
+              cell.value = cell.value * 100 + '%';
+            }
+          });
+          indexList.value[item.cells[0].value] = index;
+        });
+
         selectedValue.value = res.headers.reduce((acc, cur) => {
           acc.push(cur.name);
           return acc;
         }, []);
         tableHeader.value.forEach((item) => {
           const name = 'report.' + item.name;
+          // if (item.type === 'METRIC_CURRENCY') {
+          //   item.name = t(name);
+          // } else if (item.type === 'METRIC_RATIO') {
+          //   item.name = t(name) + '(%)';
+          // } else {
+          //   item.name = t(name);
+          // }
           item.name = t(name);
         });
         loading.value = false;
